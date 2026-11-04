@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#1e5f4d">
+<title>Rating Lab · Altman Z′ Score</title>
+<style>
+:root{
+  --bg:#f4f8f4;
+  --panel:#ffffff;
+  --ink:#15342d;
+  --muted:#60756d;
+  --line:#dbe8df;
+  --brand:#2f8f71;
+  --brand-dark:#1e5f4d;
+  --brand-soft:#e9f5ef;
+  --accent:#b6d76b;
+  --warn:#e6b85c;
+  --bad:#d96a67;
+  --good:#3fa37c;
+  --shadow:0 10px 28px rgba(31,80,63,.08);
+  --radius:18px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+button,input{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid #7db8a3;outline-offset:2px}
+a{color:var(--brand-dark)}
+h1,h2,h3,p{margin-top:0}
+h1{font-size:clamp(32px,4.2vw,54px);line-height:1.03;letter-spacing:-.05em;margin-bottom:12px;max-width:760px}
+h2{font-size:23px;line-height:1.15;letter-spacing:-.03em;margin:0 0 6px}
+h3{font-size:17px;line-height:1.2;letter-spacing:-.02em;margin:0 0 5px}
+p{color:var(--muted)}
+.app{max-width:1320px;margin:auto;padding:0 22px 44px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 0;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:11px;font-size:18px;font-weight:850;letter-spacing:-.02em}
+.brand-mark{width:36px;height:36px;border-radius:11px;background:linear-gradient(135deg,var(--brand),var(--brand-dark));display:grid;place-items:center;color:#fff;font-size:18px;font-weight:900}
+.topmeta{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:7px 11px;border-radius:999px;background:#fff;border:1px solid var(--line);color:#557067;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+.pill .dot{width:7px;height:7px;border-radius:50%;background:var(--good)}
+.hero{display:grid;grid-template-columns:minmax(0,1.1fr) 280px;gap:18px;align-items:end;padding:26px 0 22px}
+.eyebrow{font-size:11px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:#4f8f79;margin-bottom:10px}
+.hero p{font-size:16px;max-width:760px;margin-bottom:0}
+.hero-box{background:linear-gradient(180deg,#f8fcf9,#eef7f1);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:var(--shadow)}
+.hero-box strong{display:block;font-size:13px;margin-bottom:6px}
+.hero-box span{display:block;font-size:12px;color:#61756d;margin-top:6px}
+.section-label{font-size:11px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:#678177;margin-bottom:10px}
+.grid-scenarios{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:0 0 18px}
+.scenario{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:14px;text-align:left;transition:.15s;min-height:110px}
+.scenario:hover{transform:translateY(-1px);border-color:#b9d5c6}
+.scenario.active{border-color:var(--brand);box-shadow:inset 0 0 0 1px var(--brand);background:linear-gradient(180deg,#fff,#f7fcf8)}
+.scenario-top{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#789187;font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+.scenario strong{display:block;font-size:15px;letter-spacing:-.01em;color:var(--ink)}
+.scenario small{font-size:12px;color:#7b8f88}
+.workspace{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(350px,.95fr);gap:18px;align-items:start}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+.editor{padding:20px}
+.editor-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px}
+.editor-head p{font-size:12px;margin:0}
+.tag{display:inline-flex;padding:8px 11px;border-radius:999px;background:var(--brand-soft);color:var(--brand-dark);font-size:11px;font-weight:800;border:1px solid #d4eadf}
+.model-note{background:#f6fbf8;border:1px solid #d6eade;padding:11px 12px;border-radius:11px;font-size:12px;color:#4e6860;margin:14px 0 6px}
+.lever{padding:13px 0;border-top:1px solid #edf3ef}
+.lever:first-of-type{border-top:0}
+.lever-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:5px}
+.lever-title{display:flex;gap:10px;min-width:0}
+.lever-icon{width:33px;height:33px;border-radius:10px;background:#eff7f2;display:grid;place-items:center;font-size:17px;flex:0 0 33px}
+.lever-name{font-size:14px;font-weight:850;letter-spacing:-.01em}
+.lever-help{font-size:11px;color:#83978f}
+.lever-value{font-size:22px;font-weight:900;letter-spacing:-.04em;white-space:nowrap;font-variant-numeric:tabular-nums}
+.slider{appearance:none;-webkit-appearance:none;width:100%;height:8px;border-radius:999px;background:linear-gradient(to right,#4aa37f 0%,#4aa37f var(--fill,50%),#e6efea var(--fill,50%),#e6efea 100%);cursor:pointer;margin:11px 0 7px}
+.slider::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--brand-dark);border:4px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.2),0 0 0 2px var(--brand-dark)}
+.slider::-moz-range-thumb{width:12px;height:12px;border-radius:50%;background:var(--brand-dark);border:4px solid #fff;box-shadow:0 0 0 2px var(--brand-dark)}
+.slider-hints{display:flex;justify-content:space-between;font-size:10px;color:#93a49e}
+.lever-tip{font-size:11px;color:#5f786e;margin-top:6px}
+.editor-footer{display:flex;gap:8px;flex-wrap:wrap;padding-top:14px;border-top:1px solid #edf3ef;margin-top:4px}
+.btn{border:0;border-radius:10px;padding:11px 13px;font-size:12px;font-weight:850;background:#e8f1ec;color:#24473d;transition:.14s}
+.btn:hover{filter:brightness(.98);transform:translateY(-1px)}
+.btn.primary{background:var(--brand-dark);color:#fff}
+.btn.accent{background:var(--accent);color:#234134}
+.btn.outline{background:#fff;border:1px solid var(--line)}
+.right{display:grid;gap:15px}
+.score-card{background:linear-gradient(180deg,#1d5d4b,#184c3f);color:#fff;border-radius:var(--radius);padding:22px;position:relative;overflow:hidden;box-shadow:0 15px 34px rgba(24,76,63,.18)}
+.score-card:after{content:"";position:absolute;right:-70px;top:-70px;width:180px;height:180px;background:radial-gradient(circle,rgba(182,215,107,.22),transparent 68%)}
+.score-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.score-head .section-label{margin:0;color:#c4ddd2}
+.score-flag{padding:6px 9px;border-radius:8px;border:1px solid rgba(255,255,255,.22);font-size:11px;font-weight:800;color:#e4f3ec}
+.score-main{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:end;padding-top:14px}
+.score-number strong{display:block;font-size:clamp(62px,8vw,90px);line-height:1;letter-spacing:-.08em;font-variant-numeric:tabular-nums}
+.score-number span{font-size:13px;color:#c0d6ce}
+.status{display:flex;gap:8px;align-items:center;font-weight:850;font-size:17px;margin:6px 0 7px}
+.status-circle{width:11px;height:11px;border-radius:50%;background:var(--warn)}
+.score-caption{font-size:12px;max-width:440px;color:#c5ddd4;min-height:34px}
+.score-side{display:grid;gap:8px;min-width:128px}
+.mini-box{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:10px 11px}
+.mini-box .label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:#c0d6ce;font-weight:800;margin-bottom:3px}
+.mini-box .value{display:block;font-size:21px;font-weight:900;letter-spacing:-.04em}
+.mini-box .sub{display:block;font-size:11px;color:#c8ddd6;margin-top:3px}
+.ruler-wrap{padding:17px 0 4px}
+.ruler{height:12px;border-radius:999px;position:relative;background:linear-gradient(to right,var(--bad) 0% var(--low),var(--warn) var(--low) var(--high),var(--good) var(--high) 100%)}
+.marker{position:absolute;left:var(--pos);top:-10px;transform:translateX(-50%);height:32px;width:4px;background:#fff;border-radius:4px;box-shadow:0 0 0 2px rgba(18,48,40,.45)}
+.marker:before{content:"";position:absolute;width:11px;height:11px;top:-4px;left:-3.5px;background:#fff;transform:rotate(45deg)}
+.ruler-labels,.thresholds{display:flex;justify-content:space-between;font-size:11px;color:#c5ddd4;margin-top:12px}
+.delta-row{display:flex;justify-content:space-between;align-items:center;gap:12px;border-top:1px solid rgba(255,255,255,.12);padding-top:14px;margin-top:15px}
+.delta-label{font-size:11px;color:#c4dad1}
+.delta-value{font-size:14px;font-weight:900}
+.delta-value.positive{color:#95e0bc}.delta-value.negative{color:#ffc1bc}
+.mission,.action-card,.breakdown,.quiz{padding:19px}
+.mission-top{display:flex;gap:10px;align-items:flex-start}
+.mission-icon{width:36px;height:36px;border-radius:11px;background:#eef8f2;display:grid;place-items:center;font-size:18px;flex-shrink:0}
+.mission p,.action-card p,.breakdown p,.quiz p{font-size:12px;margin-bottom:12px}
+.mission-progress{border-top:1px solid #edf3ef;padding-top:11px;margin-top:12px;font-size:12px;color:#60766d}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.action{background:#f6fbf8;border:1px solid #e0eee6;border-radius:12px;padding:12px;text-align:left;min-height:78px}
+.action:hover{border-color:#bfdcca;background:#f1f8f4}
+.action b{display:block;font-size:12px;margin-bottom:5px;line-height:1.25}
+.action span{font-size:11px;color:#6d837b}
+.section-row{display:flex;justify-content:space-between;align-items:end;gap:14px;margin:22px 0 12px}
+.section-row p{font-size:12px;margin:0}
+.learning-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:18px}
+.contrib{display:grid;grid-template-columns:122px minmax(0,1fr) 52px;gap:8px;align-items:center;margin:11px 0}
+.contrib-label{font-size:12px;font-weight:800;line-height:1.2}
+.contrib-meter{height:12px;background:#eef4f0;border-radius:999px;overflow:hidden}
+.contrib-fill{height:100%;background:linear-gradient(90deg,#5ab08a,#2c8b6c)}
+.contrib-fill.negative{background:linear-gradient(90deg,#eea39f,#d86b67)}
+.contrib-val{text-align:right;font-size:12px;font-weight:900;font-variant-numeric:tabular-nums}
+.insight{margin-top:12px;padding:11px 12px;background:#f6fbf8;border:1px solid #dcece3;border-radius:11px;font-size:12px;color:#51675f}
+.question{font-size:14px;font-weight:800;color:var(--ink);margin-bottom:10px}
+.answers{display:grid;gap:8px}
+.answer{padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:#fff;text-align:left;font-weight:700;color:#274239}
+.answer:hover{border-color:#b8d8c7;background:#f8fcf9}
+.answer.correct{background:#eef8f2;border-color:#a9d3bf}
+.answer.incorrect{background:#fff1f0;border-color:#efc1bf}
+.feedback{display:none;margin-top:10px;padding:11px 12px;border-radius:11px;background:#f6fbf8;border:1px solid #dcece3;font-size:12px;color:#4c655d}
+.feedback.show{display:block}
+.bottom{margin-top:20px;background:#f6fbf8;border:1px solid #d9ebe0;border-radius:16px;padding:16px;display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.bottom p{font-size:12px;margin:6px 0 0}
+.foot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:16px 2px 0;color:#6b8179;font-size:11px}
+.source-links{max-width:920px}
+@media (max-width:1080px){.workspace,.learning-grid,.hero{grid-template-columns:1fr}.hero-box{max-width:380px}.score-main{grid-template-columns:1fr}.score-side{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:840px){.grid-scenarios{grid-template-columns:1fr 1fr}.actions{grid-template-columns:1fr}.app{padding:0 15px 32px}}
+@media (max-width:580px){.grid-scenarios{grid-template-columns:1fr}.topbar{align-items:flex-start;flex-direction:column}.score-side{grid-template-columns:1fr}.contrib{grid-template-columns:104px minmax(0,1fr) 46px}}
+@media print{body{background:#fff}.btn,.topmeta,.hero-box,.bottom button{display:none!important}.card,.score-card,.bottom{box-shadow:none}.app{padding:0}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand"><div class="brand-mark">RL</div><div>Rating Lab <span style="color:#5a776d;font-weight:700">· Altman Z′ Score</span></div></div>
+    <div class="topmeta">
+      <div class="pill"><span class="dot"></span> Lehrgang Risikomanagement</div>
+      <div class="pill">Interaktive Schulungsdemo</div>
+      <div class="pill">Firmenkunden · vereinfacht</div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div>
+      <div class="eyebrow">Lernen durch Ausprobieren</div>
+      <h1>Kannst du ein Unternehmen mit wenigen Stellhebeln besser einschätzen?</h1>
+      <p>Diese Anwendung erklärt den <strong>Altman Z′-Score</strong> auf einfache Weise. Die Teilnehmenden verändern fünf Kennzahlen, sehen sofort die Wirkung auf den Score und erhalten zusätzlich ein <strong>fiktives Rating von 1 bis 6</strong>. Ziel ist nicht ein echtes Bankrating, sondern ein verständliches Gefühl dafür, wie wirtschaftliche Stärke und Schwäche zusammenhängen.</p>
+    </div>
+    <aside class="hero-box">
+      <strong>Modellrahmen</strong>
+      <div style="font-size:13px;color:#214238">Vereinfachte Anwendung für <b>private Produktionsunternehmen</b>.</div>
+      <span>Das PD-Mapping unten ist – sofern angezeigt – rein didaktisch und <b>nicht kalibriert</b>.</span>
+    </aside>
+  </section>
+
+  <div class="section-label">Wähle ein Beispielunternehmen</div>
+  <section class="grid-scenarios" id="presets">
+    <button class="scenario active" data-preset="solid" type="button">
+      <div class="scenario-top"><span>Stabil</span><span>🏭</span></div>
+      <strong>Alpen Maschinenbau</strong>
+      <small>Solide Bilanz, gute Ertragskraft, vernünftiger Puffer.</small>
+    </button>
+    <button class="scenario" data-preset="fragile" type="button">
+      <div class="scenario-top"><span>Beobachtung</span><span>🔎</span></div>
+      <strong>Bergland Technik</strong>
+      <small>Ordentliche Umsätze, aber nur begrenzte Stabilität.</small>
+    </button>
+    <button class="scenario" data-preset="crisis" type="button">
+      <div class="scenario-top"><span>Krise</span><span>🚨</span></div>
+      <strong>Nord Metall</strong>
+      <small>Schwache Liquidität und negative Innenfinanzierungskraft.</small>
+    </button>
+    <button class="scenario" data-preset="trap" type="button">
+      <div class="scenario-top"><span>Überraschung</span><span>⚡</span></div>
+      <strong>Sprint Industrie</strong>
+      <small>Sehr hoher Umsatz, aber auffällige Schwächen unter der Oberfläche.</small>
+    </button>
+  </section>
+
+  <section class="workspace">
+    <section class="card editor">
+      <div class="editor-head">
+        <div>
+          <div class="section-label">Kennzahlen verändern</div>
+          <h2>Was treibt das Rating?</h2>
+          <p>Alle Eingaben sind in Prozent der Bilanzsumme bzw. bei X₄ als Verhältnis interpretiert. Die Regler bleiben bewusst einfach und unabhängig voneinander.</p>
+        </div>
+        <div class="tag">Modell: Altman Z′</div>
+      </div>
+
+      <div class="model-note" id="model-note">
+        Verwendet wird ausschließlich der <strong>Altman Z′-Score</strong> für private Produktionsunternehmen. Für die vierte Kennzahl zählt der <strong>Buchwert des Eigenkapitals im Verhältnis zu den Verbindlichkeiten</strong>.
+      </div>
+
+      <div class="lever">
+        <div class="lever-top"><div class="lever-title"><div class="lever-icon">💧</div><div><div class="lever-name">1. Liquiditätspuffer</div><div class="lever-help">Working Capital / Total Assets</div></div></div><div class="lever-value" id="v-wc"></div></div>
+        <input class="slider" id="s-wc" type="range" min="-30" max="40" step="1">
+        <div class="slider-hints"><span>eng</span><span>komfortabel</span></div>
+        <div class="lever-tip">Wie viel kurzfristiger Spielraum vorhanden ist.</div>
+      </div>
+
+      <div class="lever">
+        <div class="lever-top"><div class="lever-title"><div class="lever-icon">🧱</div><div><div class="lever-name">2. Gewinnpolster</div><div class="lever-help">Retained Earnings / Total Assets</div></div></div><div class="lever-value" id="v-ret"></div></div>
+        <input class="slider" id="s-ret" type="range" min="-30" max="40" step="1">
+        <div class="slider-hints"><span>schwach</span><span>stark</span></div>
+        <div class="lever-tip">Wie viel Substanz aus früheren Gewinnen aufgebaut wurde.</div>
+      </div>
+
+      <div class="lever">
+        <div class="lever-top"><div class="lever-title"><div class="lever-icon">📈</div><div><div class="lever-name">3. Ertragskraft</div><div class="lever-help">EBIT / Total Assets</div></div></div><div class="lever-value" id="v-ebit"></div></div>
+        <input class="slider" id="s-ebit" type="range" min="-15" max="25" step="1">
+        <div class="slider-hints"><span>Verlust</span><span>hoch profitabel</span></div>
+        <div class="lever-tip">Wie gut das Geschäft aus dem Vermögen operativen Gewinn erzeugt.</div>
+      </div>
+
+      <div class="lever">
+        <div class="lever-top"><div class="lever-title"><div class="lever-icon">🛡️</div><div><div class="lever-name">4. Eigenkapitalquote relativ zu Schulden</div><div class="lever-help">Book Equity / Total Liabilities</div></div></div><div class="lever-value" id="v-equity"></div></div>
+        <input class="slider" id="s-equity" type="range" min="0" max="250" step="5">
+        <div class="slider-hints"><span>hoch verschuldet</span><span>kapitalstark</span></div>
+        <div class="lever-tip">Je höher dieses Verhältnis, desto robuster wirkt die Kapitalstruktur im Modell.</div>
+      </div>
+
+      <div class="lever">
+        <div class="lever-top"><div class="lever-title"><div class="lever-icon">🚚</div><div><div class="lever-name">5. Umsatzkraft</div><div class="lever-help">Sales / Total Assets</div></div></div><div class="lever-value" id="v-sales"></div></div>
+        <input class="slider" id="s-sales" type="range" min="20" max="300" step="5">
+        <div class="slider-hints"><span>träge</span><span>umschlagstark</span></div>
+        <div class="lever-tip">Wie intensiv das Unternehmen seine Vermögensbasis für Umsatz nutzt.</div>
+      </div>
+
+      <div class="editor-footer">
+        <button class="btn outline" id="reset" type="button">Ausgangslage zurücksetzen</button>
+        <button class="btn" id="save-base" type="button">Ausgangslage speichern</button>
+        <button class="btn accent" id="start-mission" type="button">Rettungsmission starten →</button>
+      </div>
+    </section>
+
+    <div class="right">
+      <section class="score-card">
+        <div class="score-head">
+          <div>
+            <div class="section-label">Ergebnis</div>
+            <div class="score-flag">Altman Z′</div>
+          </div>
+          <div style="font-size:11px;color:#c8ddd6;text-align:right">Lehrgang Risikomanagement<br>fiktive Schulungslogik</div>
+        </div>
+        <div class="score-main">
+          <div>
+            <div class="score-number"><strong id="score"></strong><span>Z′-Score</span></div>
+            <div class="status"><span class="status-circle" id="status-circle"></span><span id="status"></span></div>
+            <div class="score-caption" id="score-caption"></div>
+          </div>
+          <div class="score-side">
+            <div class="mini-box"><span class="label">Fiktives Rating</span><span class="value" id="rating"></span><span class="sub" id="rating-text"></span></div>
+            <div class="mini-box"><span class="label">Illustrative PD</span><span class="value" id="pd"></span><span class="sub">keine echte Kalibrierung</span></div>
+          </div>
+        </div>
+        <div class="ruler-wrap">
+          <div class="ruler" id="ruler"><div class="marker" id="marker"></div></div>
+          <div class="ruler-labels"><span id="low-label"></span><span id="high-label"></span></div>
+          <div class="thresholds"><span>kritisch</span><span>Graubereich</span><span>stabiler</span></div>
+        </div>
+        <div class="delta-row">
+          <div>
+            <div class="delta-label" id="start-score"></div>
+            <div class="delta-label">Veränderung gegenüber der Ausgangslage</div>
+          </div>
+          <div class="delta-value" id="delta"></div>
+        </div>
+      </section>
+
+      <section class="card mission">
+        <div class="mission-top"><div class="mission-icon">🎯</div><div><h3>Mission: aus schwach mach stabiler</h3><p>Bringe <strong>Bergland Technik</strong> möglichst in die gute Zone. Danach diskutiert ihr gemeinsam: Welche Maßnahmen wären in der Realität überhaupt plausibel?</p></div></div>
+        <button class="btn primary" id="start-mission-2" type="button">Mission starten</button>
+        <div class="mission-progress" id="mission-feedback"></div>
+      </section>
+
+      <section class="card action-card">
+        <h3>Ereignisse simulieren</h3>
+        <p id="shock-insight">Probiere ein Ereignis aus und beobachte, welche Kennzahlen sich besonders bewegen.</p>
+        <div class="actions">
+          <button class="action" data-shock="demand" type="button"><b>Nachfrageeinbruch</b><span>Weniger Umsatz und Margendruck belasten das Modell.</span></button>
+          <button class="action" data-shock="late" type="button"><b>Kunden zahlen später</b><span>Der Liquiditätspuffer schrumpft.</span></button>
+          <button class="action" data-shock="turnaround" type="button"><b>Sanierung gelingt</b><span>Ertrag, Puffer und Vertrauen verbessern sich.</span></button>
+          <button class="action" data-shock="capital" type="button"><b>Kapitalmaßnahme</b><span>Mehr Eigenkapital entlastet die Struktur.</span></button>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <div class="section-row">
+    <div>
+      <div class="section-label">Score verstehen</div>
+      <h2>Welche Teile wirken wie stark?</h2>
+    </div>
+    <p>Die Balken zeigen den rechnerischen Beitrag jeder Kennzahl zum aktuellen Z′-Score.</p>
+  </div>
+
+  <section class="learning-grid">
+    <section class="card breakdown">
+      <h3>Beitragsanalyse</h3>
+      <p id="formula">Z′ = 0,717 × X₁ + 0,847 × X₂ + 3,107 × X₃ + 0,420 × X₄ + 0,998 × X₅</p>
+      <div id="contributions"></div>
+      <div class="insight" id="insight"></div>
+    </section>
+
+    <section class="card quiz">
+      <h3>Mini-Quiz</h3>
+      <p>Nutze die Modellgewichte, nicht nur dein Bauchgefühl.</p>
+      <div class="question">Welche Verbesserung um jeweils <u>10 Prozentpunkte</u> erhöht den Z′-Score rechnerisch am stärksten?</div>
+      <div class="answers">
+        <button class="answer" data-answer="wc" type="button">A · Liquiditätspuffer +10 Prozentpunkte</button>
+        <button class="answer" data-answer="ebit" type="button">B · Ertragskraft +10 Prozentpunkte</button>
+        <button class="answer" data-answer="equity" type="button">C · Eigenkapital / Schulden +10 Prozentpunkte</button>
+      </div>
+      <div class="feedback" id="quiz-feedback"></div>
+      <p style="margin-top:16px;margin-bottom:0"><strong>Wichtige Lernbotschaft:</strong> Ein hoher Modellhebel bedeutet nicht automatisch, dass diese Größe in der Praxis leicht verbesserbar ist.</p>
+    </section>
+  </section>
+
+  <section class="bottom">
+    <div>
+      <strong>⚠️ Didaktische Grenzen</strong>
+      <p>Das Tool ist eine <strong>Schulungsanwendung</strong>. Es ist kein vollständiges Bankrating und keine regulatorische Risikomessung. Das gezeigte <strong>Rating 1–6</strong> ist frei erfunden und dient nur der Verständlichkeit. Die <strong>PD-Angabe</strong> ist eine illustrative Übersetzung der Ratingstufen in grobe Ausfallspannen – ohne historische Kalibrierung, ohne Portfoliodaten und ohne Validierung.</p>
+    </div>
+    <button class="btn primary" id="print" type="button">▤ Ergebnis drucken</button>
+  </section>
+
+  <footer class="foot">
+    <div class="source-links"><strong>Methodik:</strong> Altman Z′-Score für private Produktionsunternehmen. Typische Zonen: <b>unter 1,23</b> kritisch, <b>zwischen 1,23 und 2,90</b> Graubereich, <b>über 2,90</b> stabiler. Alle Unternehmen, Ratings und PD-Spannen in dieser Demo sind fiktiv.</div>
+    <div>Rating Lab · Lehrgang Risikomanagement · Schulungsdemo</div>
+  </footer>
+</div>
+
+<script>
+(function(){'use strict';
+const keys=['wc','ret','ebit','equity','sales'];
+const titles={wc:'Liquidität',ret:'Gewinnpolster',ebit:'Ertragskraft',equity:'Eigenkapital',sales:'Umsatz'};
+const MODEL={name:'Altman Z′',coeff:[0.717,0.847,3.107,0.420,0.998],low:1.23,high:2.90,formula:'Z′ = 0,717 × X₁ + 0,847 × X₂ + 3,107 × X₃ + 0,420 × X₄ + 0,998 × X₅'};
+const presets={
+  solid:{wc:22,ret:20,ebit:13,equity:200,sales:140},
+  fragile:{wc:8,ret:6,ebit:5,equity:55,sales:165},
+  crisis:{wc:-12,ret:-14,ebit:-5,equity:20,sales:80},
+  trap:{wc:-3,ret:4,ebit:11,equity:45,sales:270}
+};
+const shocks={
+  demand:{wc:-7,ret:0,ebit:-8,equity:-10,sales:-40,text:'Nachfrageeinbruch: Weniger Umsatz und Ertrag ziehen den Score nach unten. Die Werte sind illustrative Annahmen.'},
+  late:{wc:-15,ret:0,ebit:0,equity:0,sales:0,text:'Zahlungsverzug: Vor allem die Liquidität leidet. Nicht jede Kennzahl reagiert gleich stark.'},
+  turnaround:{wc:5,ret:4,ebit:7,equity:15,sales:10,text:'Sanierung: Bessere Erträge und mehr Puffer stützen den Score – in der Realität braucht das Zeit.'},
+  capital:{wc:5,ret:0,ebit:0,equity:60,sales:0,text:'Kapitalmaßnahme: Eine robustere Kapitalstruktur hilft dem Modell sichtbar.'}
+};
+const ratingScale=[
+  {min:3.50, rating:'1', text:'sehr stark', pd:'< 0,30 %'},
+  {min:3.00, rating:'2', text:'gut', pd:'0,30–0,80 %'},
+  {min:2.50, rating:'3', text:'ordentlich', pd:'0,80–1,50 %'},
+  {min:1.80, rating:'4', text:'beobachten', pd:'1,50–4,00 %'},
+  {min:1.23, rating:'5', text:'schwach', pd:'4,00–10,00 %'},
+  {min:-Infinity, rating:'6', text:'kritisch', pd:'> 10,00 %'}
+];
+let scenario='fragile', values={...presets.fragile}, baseline={...presets.fragile}, mission=false;
+const $=id=>document.getElementById(id);
+const fmt=(n,d=2)=>n.toLocaleString('de-DE',{minimumFractionDigits:d,maximumFractionDigits:d});
+function calc(v=values){return keys.reduce((a,k,i)=>a+MODEL.coeff[i]*v[k]/100,0)}
+function zone(z){return z<MODEL.low?'bad':z>MODEL.high?'good':'mid'}
+function getRating(z){return ratingScale.find(x=>z>=x.min)}
+function setPreset(id){scenario=id;values={...presets[id]};baseline={...values};mission=false;$('shock-insight').textContent='Probiere ein Ereignis aus und beobachte, welche Kennzahlen sich besonders bewegen.';render()}
+function render(){
+  const score=calc(), start=calc(baseline), diff=score-start, kind=zone(score), rating=getRating(score);
+  const colors={bad:'#ffc0bb',mid:'#f2d07b',good:'#8de0bb'};
+  $('score').textContent=fmt(score);
+  $('status').textContent={bad:'Kritischer Bereich',mid:'Beobachtungsbereich',good:'Unauffälliger Bereich'}[kind];
+  $('score-caption').textContent={bad:'Das Modell zeigt deutliche Warnsignale. Welche Schwachstellen fallen besonders auf?',mid:'Das Bild ist gemischt: einzelne Stärken treffen auf erkennbare Schwächen.',good:'Im Modell liegt die Firma in einer stabileren Zone. Aber frei von Risiko ist sie damit noch nicht.'}[kind];
+  $('status-circle').style.background=colors[kind];
+  $('rating').textContent=rating.rating;
+  $('rating-text').textContent='Fiktiv · '+rating.text;
+  $('pd').textContent=rating.pd;
+  $('start-score').textContent='Start: '+fmt(start)+' Punkte';
+  $('delta').textContent=(diff>0?'+ ':diff<0?'− ':'± ')+fmt(Math.abs(diff));
+  $('delta').className='delta-value '+(diff>.001?'positive':diff<-.001?'negative':'');
+  const max=6;
+  $('ruler').style.setProperty('--low',MODEL.low/max*100+'%');
+  $('ruler').style.setProperty('--high',MODEL.high/max*100+'%');
+  $('marker').style.setProperty('--pos',Math.max(1,Math.min(99,score/max*100))+'%');
+  $('low-label').textContent='unter '+fmt(MODEL.low)+' kritisch';
+  $('high-label').textContent='über '+fmt(MODEL.high)+' stabiler';
+  keys.forEach(k=>{
+    const input=$('s-'+k), val=values[k];
+    input.value=val;
+    $('v-'+k).textContent=val+' %';
+    input.style.setProperty('--fill',(val-Number(input.min))/(Number(input.max)-Number(input.min))*100+'%');
+  });
+  document.querySelectorAll('[data-preset]').forEach(b=>{const active=b.dataset.preset===scenario;b.classList.toggle('active',active);b.setAttribute('aria-pressed',active?'true':'false')});
+  $('formula').textContent=MODEL.formula;
+  const parts=keys.map((k,i)=>MODEL.coeff[i]*values[k]/100);
+  const largest=Math.max(...parts.map(x=>Math.abs(x)),0.1);
+  $('contributions').innerHTML=keys.map((k,i)=>{
+    const p=parts[i];
+    return '<div class="contrib"><div class="contrib-label">'+(i+1)+'. '+titles[k]+'</div><div class="contrib-meter"><div class="contrib-fill '+(p<0?'negative':'')+'" style="width:'+Math.max(0,Math.abs(p)/largest*100)+'%"></div></div><div class="contrib-val">'+(p>0?'+':'')+fmt(p)+'</div></div>';
+  }).join('');
+  const idx=parts.indexOf(Math.max(...parts));
+  $('insight').textContent=(parts.some(x=>x<0)?'Achtung: Negative Kennzahlen ziehen den Score sichtbar nach unten. ':'')+'Der größte positive Beitrag kommt aktuell aus „'+titles[keys[idx]]+'“. Das ist ein Modellhinweis, kein vollständiges Krediturteil.';
+  $('mission-feedback').innerHTML=mission?(score>MODEL.high?'<strong>🎉 Mission geschafft!</strong> Du hast die gute Zone erreicht. Diskutiert nun: Wäre das Unternehmen deshalb automatisch kreditwürdig?':'<strong>'+fmt(Math.max(0,MODEL.high-score))+' Punkte bis zur guten Zone.</strong> Probiere verschiedene Hebel und begründe, welcher realistisch wäre.'):'Tipp: Oft hilft die Ertragskraft besonders stark – aber nicht jede rechnerisch starke Maßnahme ist in der Praxis leicht umsetzbar.';
+}
+keys.forEach(k=>$('s-'+k).addEventListener('input',e=>{values[k]=Number(e.target.value);scenario='';render()}));
+document.querySelectorAll('[data-preset]').forEach(b=>b.addEventListener('click',()=>setPreset(b.dataset.preset)));
+$('reset').addEventListener('click',()=>{values={...baseline};mission=false;render()});
+$('save-base').addEventListener('click',()=>{baseline={...values};$('shock-insight').textContent='Neue Ausgangslage gespeichert. Jetzt kannst du die Wirkung weiterer Änderungen gut vergleichen.';render()});
+function startMission(){scenario='fragile';values={...presets.fragile};baseline={...values};mission=true;render();$('s-ebit').focus({preventScroll:true})}
+$('start-mission').addEventListener('click',startMission);
+$('start-mission-2').addEventListener('click',startMission);
+document.querySelectorAll('[data-shock]').forEach(b=>b.addEventListener('click',()=>{
+  const s=shocks[b.dataset.shock];
+  keys.forEach(k=>{const input=$('s-'+k);values[k]=Math.max(Number(input.min),Math.min(Number(input.max),values[k]+s[k]))});
+  scenario='';$('shock-insight').textContent=s.text;render();
+}));
+document.querySelectorAll('[data-answer]').forEach(b=>b.addEventListener('click',()=>{
+  const right=b.dataset.answer==='ebit';
+  document.querySelectorAll('[data-answer]').forEach(x=>x.classList.remove('correct','incorrect'));
+  b.classList.add(right?'correct':'incorrect');
+  const changes={wc:MODEL.coeff[0]*0.10,ebit:MODEL.coeff[2]*0.10,equity:MODEL.coeff[3]*0.10};
+  $('quiz-feedback').innerHTML=(right?'<strong>Richtig!</strong> ':'<strong>Noch nicht.</strong> ')+'Bei +10 Prozentpunkten verändert sich der Score um: Liquidität <b>+'+fmt(changes.wc)+'</b>, Ertragskraft <b>+'+fmt(changes.ebit)+'</b>, Eigenkapital <b>+'+fmt(changes.equity)+'</b>. Rechnerisch gewinnt die Ertragskraft, weil ihr Modellgewicht am höchsten ist.';
+  $('quiz-feedback').classList.add('show');
+}));
+$('print').addEventListener('click',()=>window.print());
+render();
+})();
+</script>
+</body>
+</html>
