@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#17513d">
+<title>Hotel Sonnental · Kreditrisiko Lab</title>
+<style>
+:root{--bg:#f4f8f5;--paper:#fff;--ink:#193d30;--muted:#647e70;--line:#dce9e0;--green:#226c50;--green-dark:#174d3b;--green-soft:#eaf5ed;--gold:#efb839;--rose:#e45b7a;--red:#cb5a57;--good:#3e9976;--radius:16px;--shadow:0 8px 25px #1647330d}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.42 Inter,"Segoe UI",Arial,sans-serif}button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible{outline:3px solid #91c6ab;outline-offset:2px}h1,h2,h3,p{margin:0}h1{font-size:clamp(30px,3.7vw,46px);letter-spacing:-.045em;line-height:1.06}h2{font-size:21px;letter-spacing:-.025em}h3{font-size:16px}p{color:var(--muted)}small{font-size:11px}.app{max-width:1380px;margin:auto;padding:0 22px 35px}.topbar{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:13px 0;border-bottom:1px solid var(--line)}.brand{display:flex;align-items:center;gap:10px;font-weight:850;letter-spacing:-.025em;font-size:18px}.mark{display:grid;place-items:center;background:linear-gradient(135deg,#308e69,#16503a);color:#fff;width:36px;height:36px;border-radius:11px;font-weight:900}.top-tags{display:flex;flex-wrap:wrap;gap:7px}.tag{display:inline-flex;padding:6px 10px;background:#fff;border:1px solid var(--line);border-radius:99px;color:#527564;font-size:11px;font-weight:800}.hero{display:flex;justify-content:space-between;align-items:end;gap:20px;padding:22px 0 17px}.hero .eyebrow{margin-bottom:7px}.hero p{font-size:14px;margin-top:7px;max-width:850px}.hero-side{text-align:right;white-space:nowrap;align-self:center}.hero-side b{display:block;font-size:23px;letter-spacing:-.05em}.hero-side span{font-size:11px;color:var(--muted)}.eyebrow{font-weight:850;font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:#5b8c74}.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);min-width:0}.scenario-row{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:13px}.scenario{position:relative;padding:15px 17px;border:1px solid var(--line);border-radius:14px;background:white;text-align:left;display:flex;align-items:center;gap:12px}.scenario:hover{border-color:#93c7a6}.scenario.active{border:2px solid var(--green);background:linear-gradient(110deg,#f1faf4,#fff);padding:14px 16px}.scenario .index{display:grid;place-items:center;flex:0 0 34px;height:34px;border-radius:10px;color:var(--green);background:var(--green-soft);font-weight:900}.scenario.active .index{background:var(--green);color:#fff}.scenario strong{display:block;font-size:14px}.scenario small{display:block;color:var(--muted);margin-top:3px}.scenario .checked{margin-left:auto;color:var(--green);font-size:20px;visibility:hidden}.scenario.active .checked{visibility:visible}.controls{padding:15px 17px;margin-bottom:13px}.section-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:11px}.section-head h2{margin-top:3px}.section-head p{margin-top:5px;font-size:12px}.btn{border:1px solid var(--line);background:#f0f7f2;color:var(--green-dark);border-radius:9px;padding:9px 12px;font-size:11px;font-weight:850;white-space:nowrap}.btn:hover{background:#dff1e5}.sliders{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px 18px}.knob{min-width:0}.knob-top{display:flex;justify-content:space-between;gap:5px;align-items:baseline}.knob-top label{font-size:12px;font-weight:800}.knob-top b{font-size:13px;color:var(--green);white-space:nowrap;font-variant-numeric:tabular-nums}.knob small{display:block;color:#8a9d90;font-size:10px;margin-bottom:4px}.range{appearance:none;-webkit-appearance:none;display:block;width:100%;height:7px;background:linear-gradient(to right,#479b71 0%,#479b71 var(--fill,50%),#e9f0eb var(--fill,50%));border-radius:99px;margin:12px 0 10px}.range::-webkit-slider-thumb{-webkit-appearance:none;background:var(--green-dark);border:3px solid white;box-shadow:0 0 0 2px var(--green-dark);width:17px;height:17px;border-radius:50%}.range::-moz-range-thumb{background:var(--green-dark);border:3px solid white;box-shadow:0 0 0 2px var(--green-dark);width:12px;height:12px;border-radius:50%}.controls-note{font-size:10px;color:#799080;margin-top:6px}.phase-bar{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:13px}.phase{background:#fff;border:1px solid var(--line);border-radius:12px;text-align:left;padding:10px 12px}.phase:hover{border-color:#a5ceb4}.phase.active{color:#fff;background:var(--green-dark);border-color:var(--green-dark)}.phase span{display:block;font-size:10px;font-weight:800;opacity:.74}.phase strong{display:block;font-size:12px;margin-top:3px}.info-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(320px,.85fr);gap:13px;margin-bottom:13px}.facts-panel{padding:17px}.fact-head{display:flex;align-items:center;justify-content:space-between;gap:9px;margin-bottom:10px}.fact-head h2{margin-top:3px}.phase-tag{font-size:10px;border-radius:99px;background:var(--green-soft);color:var(--green);padding:6px 9px;font-weight:850}.facts-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:10px}.fact{padding:10px;border:1px solid #e4efe7;background:#f8fbf8;border-radius:10px}.fact b{display:block;font-size:16px;letter-spacing:-.025em}.fact span{font-size:10px;color:var(--muted)}.story-text{font-size:12px;color:#536c5b;margin-bottom:10px}.comparison-note{padding:10px 11px;border-left:3px solid var(--green);background:#f2f9f4;border-radius:0 8px 8px 0;font-size:12px;color:#375946}.comparison-note.problem{background:#fff5f2;border-color:var(--red);color:#75504b}.phase-footer{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-top:11px}.nav{display:flex;gap:6px}.summary-panel{background:linear-gradient(155deg,#1b5c45,#164637);padding:17px;color:#fff;border:0}.summary-panel .eyebrow{color:#bbdccb}.summary-panel h2{font-size:19px;margin:3px 0 11px}.metric-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.metric{border-radius:11px;border:1px solid #ffffff24;background:#ffffff10;padding:10px}.metric span{display:block;font-size:10px;color:#c4e1d0;font-weight:750}.metric strong{display:block;font-size:clamp(20px,2.7vw,27px);letter-spacing:-.04em;margin-top:4px;font-variant-numeric:tabular-nums}.metric small{color:#c5e2d0;font-size:10px}.summary-message{margin-top:11px;padding-top:11px;border-top:1px solid #ffffff2d;font-size:12px;color:#d1e9d9}.summary-message b{color:white}.charts{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-bottom:13px}.viz{padding:17px;min-width:0}.viz .section-head{min-height:59px;margin-bottom:4px}.legend{display:flex;gap:13px;align-items:center;flex-wrap:wrap;font-size:10px;font-weight:750;color:#65796d;margin:8px 0 2px}.legend span{display:flex;align-items:center;gap:5px}.swatch{width:11px;height:11px;border-radius:2px;display:inline-block}.chartbox{width:100%;min-width:0;overflow:hidden}.chartbox svg{display:block;width:100%;height:auto;max-height:290px;overflow:visible}.chart-foot{font-size:11px;color:#6b8274;margin-top:7px}.chart-foot strong{color:var(--ink)}.status-line{display:flex;align-items:center;justify-content:space-between;gap:9px;margin-top:9px;flex-wrap:wrap}.status-pill{padding:6px 10px;background:#eaf6ee;color:#246d4e;border-radius:8px;font-size:11px;font-weight:800}.status-pill.bad{background:#fff0eb;color:#a94c47}.status-pill.warn{background:#fff6df;color:#8b6c22}.stage-card{padding:15px 17px}.stage-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.stage-item{border:1px solid #e1eee4;background:#f9fcfa;padding:10px;border-radius:10px}.stage-item span{font-size:10px;color:var(--muted);display:block}.stage-item strong{font-size:16px;margin-top:4px;display:block}.stage-item small{font-size:10px;color:#719080;display:block;margin-top:4px}.stage-note{font-size:11px;color:#5b7868;margin-top:9px}.help{font-size:11px;color:#718879;padding:15px 1px 4px}.help b{color:#3b6550}.foot{font-size:10px;color:#879b8d;border-top:1px solid var(--line);padding-top:10px}.mobile-only{display:none}
+@media(max-width:1100px){.sliders{grid-template-columns:repeat(3,1fr)}.charts{grid-template-columns:1fr}.info-grid{grid-template-columns:1fr 1fr}.hero-side{display:none}}
+@media(max-width:790px){.info-grid{grid-template-columns:1fr}.sliders{grid-template-columns:repeat(2,1fr)}.scenario-row{grid-template-columns:1fr}.top-tags{display:none}.stage-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:510px){.app{padding:0 12px 25px}.hero{padding:15px 0}.sliders{grid-template-columns:1fr 1fr;gap:12px}.phase-bar{grid-template-columns:1fr 1fr}.facts-grid{grid-template-columns:1fr 1fr}.metric strong{font-size:21px}.scenario small{font-size:10px}.hero p{font-size:12px}}
+@media print{body{background:#fff}.app{padding:0}.btn,.range,.phase-bar{display:none}.card{break-inside:avoid;box-shadow:none}.charts{grid-template-columns:1fr 1fr}.top-tags{display:none}}
+.pause-controls{display:flex;align-items:center;gap:11px;flex-wrap:wrap;margin-top:10px;padding:11px;border:1px dashed #a9cbb5;background:#f4faf6;border-radius:11px}.pause-controls[hidden]{display:none!important}.pause-controls .pause-button{font-size:12px;background:#226c50;color:#fff;border-color:#226c50;padding:10px 13px}.pause-controls .pause-button.active{background:#f9ecd0;color:#715119;border-color:#dfbf79}.pause-controls span{font-size:11px;color:#5f7868;flex:1;min-width:210px}.metric strong{font-variant-numeric:tabular-nums}
+</style>
+</head>
+<body>
+<div class="app">
+ <header class="topbar"><div class="brand"><div class="mark">RL</div> Kreditrisiko Lab · Hotel Sonnental</div><div class="top-tags"><span class="tag">Lehrgang Risikomanagement · Modul VII</span><span class="tag">Interaktive Fallstudie</span></div></header>
+ <section class="hero"><div><div class="eyebrow">Kreditvergabe · Rückzahlungsfähigkeit · Monitoring · Einstufung</div><h1>Ein Kredit. Zwei mögliche Verläufe.</h1><p>3 Mio. € für den Hotelausbau. Was passiert, wenn der Bau länger dauert und die Rückzahlung nicht zur Ertragsentwicklung passt? Vergleiche die Folgen einer späten Reaktion mit frühem Handeln.</p></div><div class="hero-side"><b>3,0 Mio. €</b><span>Expansionskredit aus der Fallstudie</span></div></section>
+
+ <section class="scenario-row" aria-label="Verlauf wählen">
+  <button class="scenario active" type="button" data-scenario="actual" aria-pressed="true"><span class="index">01</span><span><strong>Verlauf aus den Folien</strong><small>Optimistische Vergabe · späte Reaktion · UTP verzögert</small></span><span class="checked">✓</span></button>
+  <button class="scenario" type="button" data-scenario="early" aria-pressed="false"><span class="index">02</span><span><strong>Guter Verlauf: frühzeitige Erkennung</strong><small>Stressprüfung · Liquidität sichern · rechtzeitig handeln</small></span><span class="checked">✓</span></button>
+ </section>
+
+ <section class="card controls">
+  <div class="section-head"><div><div class="eyebrow">Deine Stellschrauben</div><h2>Was passiert, wenn …?</h2><p>Phase 1 zeigt den Businessplan (DSCR 1,00). Ab Phase 2 werden Bauverzögerung und schwächere Erträge sichtbar. Die Regler bleiben veränderbar.</p></div><button class="btn" type="button" id="reset">↺ Ausgangswerte</button></div>
+  <div class="sliders">
+   <div class="knob"><div class="knob-top"><label for="occ">Auslastung</label><b id="v-occ"></b></div><small>Abweichung vom Businessplan</small><input class="range" id="occ" type="range" min="-40" max="15" step="5"></div>
+   <div class="knob"><div class="knob-top"><label for="delay">Bauverzögerung</label><b id="v-delay"></b></div><small>Monate ohne Zusatzerträge</small><input class="range" id="delay" type="range" min="0" max="12" step="1"></div>
+   <div class="knob"><div class="knob-top"><label for="margin">EBITDA-Marge</label><b id="v-margin"></b></div><small>Ertragskraft im Hotelbetrieb</small><input class="range" id="margin" type="range" min="10" max="35" step="1"></div>
+   <div class="knob"><div class="knob-top"><label for="overrun">Baukosten-Mehrbetrag</label><b id="v-overrun"></b></div><small>In % der Kreditsumme</small><input class="range" id="overrun" type="range" min="0" max="30" step="5"></div>
+   <div class="knob"><div class="knob-top"><label for="rate">Kreditzins</label><b id="v-rate"></b></div><small>Vereinfachter Jahreszins</small><input class="range" id="rate" type="range" min="2" max="9" step="0.5"></div>
+   <div class="knob"><div class="knob-top"><label for="years">Tilgungsdauer</label><b id="v-years"></b></div><small>Jahre laut ursprünglichem Plan</small><input class="range" id="years" type="range" min="4" max="9" step="1"></div>
+   <div class="knob"><div class="knob-top"><label for="cash">Liquiditätspuffer</label><b id="v-cash"></b></div><small>Verfügbare Mittel vor Bau-Mehrkosten</small><input class="range" id="cash" type="range" min="0" max="1000" step="50"></div>
+  </div>
+  <div class="controls-note">Phase 1: kalibrierter Businessplan mit DSCR 1,00. Phase 2: Abweichung durch Bauverzug und schwächere Auslastung. Monatlich konstante Annuität (französische Tilgung). Die 3-monatige Kapitalstundung wird erst auf Knopfdruck in Phase 3 wirksam. Ergänzende Finanzdaten sind fiktive Schulungsannahmen.</div>
+ </section>
+
+ <nav class="phase-bar" aria-label="Fallphasen">
+   <button type="button" class="phase" data-phase="0"><span>01 · Antrag</span><strong>Kreditvergabe</strong></button>
+   <button type="button" class="phase" data-phase="1"><span>02 · Jahr 2</span><strong>Verzögerung am Bau</strong></button>
+   <button type="button" class="phase" data-phase="2"><span>03 · Warnsignal</span><strong>Stundung & Monitoring</strong></button>
+   <button type="button" class="phase" data-phase="3"><span>04 · Eskalation</span><strong>UTP & Bilanzwirkung</strong></button>
+ </nav>
+
+ <section class="info-grid">
+  <section class="card facts-panel"><div class="fact-head"><div><div class="eyebrow" id="phase-eyebrow">Phase 01</div><h2 id="phase-title"></h2></div><span class="phase-tag" id="phase-tag"></span></div>
+   <div class="facts-grid" id="facts"></div><p class="story-text" id="phase-story"></p>
+   <div class="comparison-note" id="response"></div><div class="pause-controls" id="pause-controls" hidden><button class="btn pause-button" id="pause-toggle" type="button" aria-pressed="false">⏸ 3 Monate Kapitaltilgung aussetzen</button><span id="pause-help">In der Stundung werden nur Zinsen bezahlt; die reguläre Annuität wird anschließend fortgesetzt.</span></div>
+   <div class="phase-footer"><span class="tag" id="phase-progress"></span><div class="nav"><button class="btn" type="button" id="prev">← Zurück</button><button class="btn" type="button" id="next">Weiter →</button></div></div>
+  </section>
+  <section class="card summary-panel"><div class="eyebrow">Wirtschaftliche Wirkung</div><h2>Wie tragfähig ist die Rückzahlung?</h2>
+   <div class="metric-grid">
+    <div class="metric"><span id="dscr-label">DSCR im Businessplan</span><strong id="dscr">—</strong><small>CFADS / Zins + Tilgung</small></div>
+    <div class="metric"><span>Cashflow für Schuldendienst</span><strong id="cfads">—</strong><small id="focus-year-cfads">im betrachteten Jahr · T€</small></div>
+    <div class="metric"><span>Schuldendienst</span><strong id="service">—</strong><small id="focus-year-service">im betrachteten Jahr · T€</small></div>
+    <div class="metric"><span id="cash-label">Liquidität nach Jahr 1</span><strong id="cash-after">—</strong><small>inkl. Bau-Mehrkosten · T€</small></div>
+   </div>
+   <div class="summary-message"><b id="signal-title"></b><br><span id="signal-text"></span></div>
+  </section>
+ </section>
+
+ <section class="charts">
+  <section class="card viz"><div class="section-head"><div><div class="eyebrow">Rückzahlungsplan</div><h2>Tilgungsplan</h2><p>Französische Tilgung: konstante Annuität, sinkender Zins- und steigender Kapitalanteil.</p></div><span class="tag" id="pause-badge">Ohne Stundung</span></div>
+   <div class="legend"><span><i class="swatch" style="background:var(--gold)"></i>Tilgung</span><span><i class="swatch" style="background:var(--rose)"></i>Zinsen</span></div>
+   <div class="chartbox" id="payment-chart" role="img" aria-label="Jährlicher Tilgungs- und Zinsplan"></div>
+   <div class="status-line"><span class="status-pill" id="payment-summary"></span><small id="payment-tagline"></small></div>
+  </section>
+  <section class="card viz"><div class="section-head"><div><div class="eyebrow">Cashflow-Projektion</div><h2>Einkünfte vs. Schuldendienst</h2><p>Über oder unter Null: Reicht der erwirtschaftete Cashflow für Zinsen und Tilgung?</p></div></div>
+   <div class="legend"><span><i class="swatch" style="background:var(--green-dark)"></i>Cashflow (CFADS)</span><span><i class="swatch" style="background:var(--rose)"></i>Zinsen</span><span><i class="swatch" style="background:var(--gold)"></i>Tilgung</span></div>
+   <div class="chartbox" id="flow-chart" role="img" aria-label="Cashflow gegen Zinsen und Tilgung als Balken oberhalb und unterhalb einer Nulllinie"></div>
+   <div class="status-line"><span class="status-pill bad" id="gap-summary"></span><small id="gap-tagline"></small></div>
+  </section>
+ </section>
+
+ <section class="card stage-card"><div class="section-head"><div><div class="eyebrow">Frühwarnung & Einstufung</div><h2>Die Entwicklung im Kreditbestand</h2><p>Wirtschaftliche Schwierigkeiten und regulatorische Einstufung sind getrennt zu beurteilen.</p></div></div>
+  <div class="stage-grid"><div class="stage-item"><span>Ausgewiesene Einstufung</span><strong id="stage"></strong><small id="stage-sub"></small></div><div class="stage-item"><span>Risikovorsorge (Folienfall)</span><strong id="ecl"></strong><small id="ecl-sub"></small></div><div class="stage-item"><span>NPL-Quote (Folienfall)</span><strong id="npl"></strong><small id="npl-sub"></small></div><div class="stage-item"><span>Frühwarnsignale</span><strong id="warnings"></strong><small id="warnings-sub"></small></div></div>
+  <p class="stage-note" id="stage-note"></p>
+ </section>
+ <section class="help"><b>Leseschlüssel:</b> <b>CFADS</b> = vereinfachter frei verfügbarer Cashflow nach operativen Abflüssen, vor Zins und Tilgung. <b>DSCR</b> = CFADS ÷ (Zinsen + Tilgung). Der Businessplan startet mit DSCR 1,00; unter 1,0 entsteht eine rechnerische Unterdeckung. <b>Französische Tilgung</b> bedeutet eine feste monatliche Annuität. Eine aktivierte <b>Kapitalstundung</b> führt drei Monate lang zu reinen Zinszahlungen; sie verändert die Fälligkeiten, nicht automatisch die Ertragskraft. Frühzeitige UTP-Prüfung und Maßnahmen schaffen Handlungsspielraum, garantieren jedoch weder Heilung noch geringere Risikovorsorge.</section>
+ <footer class="foot">Quelle des Fallverlaufs: hochgeladene Schulungsfolien „Hotel Sonnental“, Folien 31–49. Eckdaten: 3 Mio. € Kredit; 20 Tage überfällige Rate; 3 Monate beantragte Tilgungsaussetzung (manuell aktivierbar); Stage 1 → Stage 2 → Stage 3/UTP; Risikovorsorge 6 / 210 / 1.500 T€; NPL-Quote 4,0 % → 6,2 %. Die ergänzten Projekt-, Cashflow-, Sicherungs- und Szenarioannahmen sind frei erfunden und keine IFRS-9-/PD-/LGD-Kalibrierung. Keine automatische UTP-Einstufung aus dem DSCR. Funktioniert vollständig offline.</footer>
+</div>
+<noscript><p>Für die interaktive Fallstudie muss JavaScript aktiviert sein.</p></noscript>
+<script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id);
+const money=n=>Math.round(n).toLocaleString('de-DE')+' T€';
+const moneyShort=n=>Math.round(n).toLocaleString('de-DE');
+const d=n=>n.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2});
+const fmtValue=(v,id)=>id==='delay'?v+' Mon.':id==='years'?v+' J.':id==='cash'?money(v):id==='rate'?v.toLocaleString('de-DE',{minimumFractionDigits:1,maximumFractionDigits:1})+' %':(id==='occ'&&v>0?'+':'')+v+' %';
+const BASE={occ:0,delay:0,margin:20,overrun:0,rate:5,years:6,cash:250};
+const STRESS={...BASE,occ:-15,delay:6,overrun:10};
+// Annuität mit monatlicher Zins- und Tilgungszahlung: 3 Mio. Euro / 6 Jahre / 5 %.
+function monthlyAnnuity(principal,annualRate,months){
+ const r=annualRate/1200;
+ return r===0?principal/months:principal*r/(1-Math.pow(1+r,-months));
+}
+// Die fiktiven laufenden Mittelabflüsse kalibrieren den Ausgangs-CFADS exakt auf den Basis-Schuldendienst.
+const BASE_REVENUE=4600;
+const FIXED_OUTFLOWS=BASE_REVENUE*BASE.margin/100-monthlyAnnuity(3000,BASE.rate,BASE.years*12)*12;
+function activeValues(){return state.phase===0?state.planValues:state.stressValues}
+function isPaused(){return state.phase>=2&&state.paused}
+function focusIndex(){return state.phase===0?0:state.phase===3?2:1}
+
+const SCENARIOS={actual:{label:'Verlauf aus den Folien'},early:{label:'Frühzeitige Erkennung'}};
+const PHASES=[
+ {name:'Kreditvergabe',tag:'Businessplan',facts:[['3,0 Mio. €','Expansionskredit'],['DSCR 1,00','Ursprünglicher Businessplan'],['Noch keine','Tilgungsaussetzung']],story:'Die Unternehmerfamilie gilt als zuverlässig. Die Kreditabteilung vermisst aber Stressszenarien und einen belastbaren Liquiditätsnachweis.',actual:'Der Kredit wird bewilligt, ohne die Rückzahlung ausreichend unter Stress zu prüfen. Kritische Hinweise finden wenig Gehör.',early:'Die Bank fordert eine Sensitivitätsrechnung, Eigenmittel- und Liquiditätsnachweise sowie einen realistischen Bau- und Tilgungsplan.'},
+ {name:'Verzögerung am Bau',tag:'Planabweichung',facts:[['6 Monate','Bauverzögerung (Simulation)'],['−15 %','Auslastung vs. Businessplan'],['+10 %','Baukostenüberschreitung']],story:'Ab dem zweiten Vertragsjahr weicht die Realität vom Businessplan ab: weniger Auslastung und verspätete Zusatzerträge, aber die vertragliche Annuität bleibt unverändert.',actual:'Die ursprünglichen Zahlungsannahmen bleiben weitgehend unverändert. Liquiditäts- und Baukostenprobleme werden zu spät aufgegriffen.',early:'Frühwarnprüfung, neue Cashflow-Prognose, enges Baustellenmonitoring und rechtzeitig eingeforderter Eigenmittelbeitrag.'},
+ {name:'Stundung & Monitoring',tag:'Warnsignale',facts:[['20 Tage','Rate überfällig (Folienfall)'],['3 Monate','Tilgungsaussetzung beantragt'],['Stage 2','im Folienfall angenommen']],story:'Das Hotel beantragt drei Monate Tilgungsaussetzung. Aktiviere die Maßnahme bewusst mit dem Knopf: Während der drei Monate sind ausschließlich Zinsen fällig. Danach bleibt die Monatsannuität gleich und die Laufzeit kann sich verlängern.',actual:'Im Folienverlauf wird die Stundung rasch und ohne vollständige Neubewertung gewährt. Die Simulation setzt sie erst um, wenn du den Knopf betätigst.',early:'Erst Tragfähigkeit und Ursachen prüfen, dann gegebenenfalls bewusst Zins-only-Phase aktivieren – mit Forbearance-, Stage-Prüfung und verbindlichen Auflagen.'},
+ {name:'UTP & Bilanzwirkung',tag:'Krise / Eskalation',facts:[['Unbezahlte Rate','nach der Stundung'],['Erträge sinken','weitere Verschlechterung'],['UTP-Anzeichen','müssen fachlich geprüft werden']],story:'Das Risikomanagement erkennt mögliche Unlikely-to-Pay-Signale. Die Entscheidung darf nicht vom Wunsch nach einer möglichst niedrigen NPL-Quote abhängen.',actual:'Die UTP-Einstufung wird zunächst hinausgezögert. Später steht ein notleidender Kredit mit 1,5 Mio. € Risikovorsorge und 6,2 % NPL-Quote im Folienbeispiel.',early:'Abweichende Fachmeinungen werden dokumentiert und eskaliert. UTP/Stage 3 wird bei Erfüllung der Kriterien rechtzeitig erfasst; parallel beginnt eine strukturierte Sanierungsprüfung.'}
+];
+let state={scenario:'actual',phase:0,planValues:{...BASE},stressValues:{...STRESS},paused:false};
+function debtSchedule(){
+ const v=activeValues(),r=v.rate/1200,months=v.years*12;
+ const annuity=monthlyAnnuity(3000,v.rate,months);
+ const paused=isPaused();
+ let balance=3000,m=0,deferred=0;
+ const rows=[];
+ // Der 3-monatige reine Zinszahlungszeitraum liegt in Monat 13–15 (zweites Vertragsjahr).
+ // Danach bleibt die Monatsannuität unverändert. Die Restschuld verlängert die Laufzeit.
+ while(balance>0.000001&&m<months+60){
+  const interest=balance*r;
+  const interestOnly=paused&&m>=12&&m<15;
+  const principal=interestOnly?0:Math.min(balance,Math.max(0,annuity-interest));
+  const service=interest+principal;
+  if(interestOnly)deferred+=Math.max(0,annuity-interest);
+  const year=2027+Math.floor(m/12);
+  let row=rows[rows.length-1];
+  if(!row||row.year!==year){row={year,principal:0,interest:0,service:0,balanceBefore:balance,balanceAfter:balance};rows.push(row)}
+  row.principal+=principal;
+  row.interest+=interest;
+  row.service+=service;
+  balance=Math.max(0,balance-principal);
+  row.balanceAfter=balance;
+  m++;
+ }
+ return {rows,deferred,term:v.years,months:m,extraMonths:Math.max(0,m-months),annuity,paused};
+}
+function projections(){
+ const v=activeValues(),early=state.scenario==='early',schedule=debtSchedule();
+ const series=schedule.rows.map((r,i)=>{
+  // Jahr 1 = Businessplan. Erst ab Jahr 2 wirkt die negative Planabweichung.
+  const shocked=state.phase>=1&&i>=1;
+  let occupancy=0,delayDrag=0,margin=v.margin;
+  if(shocked){
+   const recovery=early?Math.min(24,Math.max(0,i-1)*7):-Math.max(0,i-1)*2;
+   occupancy=Math.max(-60,Math.min(25,v.occ+recovery));
+   delayDrag=300*(Math.min(v.delay,12)/12)*(i===1?1:i===2?.25:0);
+   margin=early?Math.min(35,v.margin+Math.max(0,i-1)*.8):Math.max(8,v.margin-Math.max(0,i-1)*.4);
+  }else if(state.phase===0){
+   // Auch im Planmodus sind die Regler nutzbar, z.B. zur Sensitivität in der Kreditvergabe.
+   occupancy=v.occ;
+   delayDrag=300*(v.delay/12)*(i===0?1:i===1?.25:0);
+  }
+  const revenue=Math.max(0,BASE_REVENUE*(1+occupancy/100)-delayDrag);
+  const ebitda=revenue*margin/100;
+  const cfads=ebitda-FIXED_OUTFLOWS;
+  return {...r,occupancy,revenue,ebitda,cfads,gap:cfads-r.service,dscr:r.service>0?cfads/r.service:null};
+ });
+ const sponsor=early&&state.phase>=2?450:0;
+ const activeYear=focusIndex();
+ const cashAfter=v.cash+sponsor+series.slice(0,activeYear+1).reduce((sum,x)=>sum+x.gap,0)-(state.phase>=1?3000*v.overrun/100:0);
+ const below=series.filter(x=>x.gap<-.01).length;
+ const shortfall=series.reduce((sum,x)=>sum+Math.max(0,-x.gap),0);
+ return {series,schedule,below,shortfall,cashAfter,sponsor,activeYear};
+}
+function svgText(x,y,t,props=''){return '<text x="'+x+'" y="'+y+'" '+props+'>'+t+'</text>'}
+function graphAxes(w,h,left,right,top,zero,bottom,maxUp,maxDown){
+ let out='';const plotW=w-left-right;
+ for(let yv=0;yv<=maxUp;yv+=250){const y=zero-(yv/maxUp)*(zero-top);out+='<line x1="'+left+'" y1="'+y+'" x2="'+(w-right)+'" y2="'+y+'" stroke="'+(yv===0?'#a9bdaf':'#e6efe8')+'" stroke-width="'+(yv===0?'1.4':'1')+'"/>'+(yv>0?svgText(left-9,y+4,yv,'text-anchor="end" font-size="10" fill="#8a9e90"'):'')}
+ for(let yv=250;yv<=maxDown;yv+=250){const y=zero+(yv/maxDown)*(bottom-zero);out+='<line x1="'+left+'" y1="'+y+'" x2="'+(w-right)+'" y2="'+y+'" stroke="#e6efe8" />'+svgText(left-9,y+4,'−'+yv,'text-anchor="end" font-size="10" fill="#8a9e90"')}
+ out+=svgText(left-9,zero+4,'0','text-anchor="end" font-size="10" font-weight="800" fill="#51685a"');return out;
+}
+function renderPayment(rows){
+ const w=600,h=252,left=42,right=13,top=24,bottom=222,plotW=w-left-right,usable=bottom-top,max=Math.max(800,Math.ceil(Math.max(...rows.map(r=>r.service))*1.1/200)*200),unit=usable/max;
+ const barW=Math.min(52,plotW/rows.length*.48);let body='';
+ for(let g=0;g<=max;g+=200){let y=bottom-g*unit;body+='<line x1="'+left+'" y1="'+y+'" x2="'+(w-right)+'" y2="'+y+'" stroke="'+(g===0?'#a4baab':'#e8f0e9')+'" stroke-width="'+(g===0?'1.2':'1')+'"/>'+svgText(left-7,y+4,g,'text-anchor="end" font-size="10" fill="#85998b"')}
+ rows.forEach((r,i)=>{const x=left+(i+.5)*plotW/rows.length,bx=x-barW/2,ph=r.principal*unit,ih=r.interest*unit;
+  body+='<g><title>'+r.year+': Tilgung '+money(r.principal)+', Zins '+money(r.interest)+', gesamt '+money(r.service)+'</title><rect x="'+bx+'" y="'+(bottom-ph)+'" width="'+barW+'" height="'+ph+'" rx="3" fill="#efb839"/><rect x="'+bx+'" y="'+(bottom-ph-ih)+'" width="'+barW+'" height="'+ih+'" rx="3" fill="#e45b7a"/>'+svgText(x,bottom+16,r.year,'text-anchor="middle" font-size="11" font-weight="700" fill="#577466"')+'</g>';
+ });
+ $('payment-chart').innerHTML='<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" aria-label="Schuldendienst aus Zinsen und Tilgung"><g>'+body+'</g></svg>';
+}
+function renderCashflow(rows){
+ const w=600,h=304,left=43,right=15,top=24,bottom=283,zero=128,maxUp=Math.max(750,Math.ceil(Math.max(...rows.map(r=>Math.max(0,r.cfads)))/250)*250),maxDown=Math.max(750,Math.ceil(Math.max(...rows.map(r=>r.service))/250)*250);
+ let body=graphAxes(w,h,left,right,top,zero,bottom,maxUp,maxDown),plotW=w-left-right,barW=Math.min(35,plotW/rows.length*.33);
+ rows.forEach((r,i)=>{const center=left+(i+.5)*plotW/rows.length,bx=center-barW-3,cx=center+3;
+  const u=Math.max(0,r.cfads)/maxUp*(zero-top),z=r.interest/maxDown*(bottom-zero),p=r.principal/maxDown*(bottom-zero);
+  body+='<g><title>'+r.year+': CFADS '+money(r.cfads)+'; Zins '+money(r.interest)+'; Tilgung '+money(r.principal)+'; '+(r.gap>=0?'Überschuss ':'Fehlbetrag ')+money(Math.abs(r.gap))+'</title>';
+  if(r.cfads>=0)body+='<rect x="'+bx+'" y="'+(zero-u)+'" width="'+barW+'" height="'+u+'" rx="2" fill="#184b3b"/>';
+  else body+='<rect x="'+bx+'" y="'+zero+'" width="'+barW+'" height="'+Math.min(bottom-zero,(-r.cfads)/maxDown*(bottom-zero))+'" rx="2" fill="#184b3b"/>';
+  body+='<rect x="'+cx+'" y="'+zero+'" width="'+barW+'" height="'+z+'" rx="2" fill="#e45b7a"/><rect x="'+cx+'" y="'+(zero+z)+'" width="'+barW+'" height="'+p+'" rx="2" fill="#efb839"/>';
+  body+=svgText(center,zero-9,r.gap<0?'−'+moneyShort(Math.abs(r.gap)):'+'+moneyShort(r.gap),'text-anchor="middle" font-size="11" font-weight="850" fill="'+(r.gap<0?'#b84f51':'#288963')+'"');
+  body+=svgText(center,bottom+16,r.year,'text-anchor="middle" font-size="11" font-weight="700" fill="#587065"')+'</g>';
+ });
+ $('flow-chart').innerHTML='<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" aria-label="Cashflow oberhalb Null, Zinsen und Tilgung unterhalb Null; Saldo pro Jahr über den Balken">'+body+'</svg>';
+}
+function paintPhase(){
+ const p=PHASES[state.phase],good=state.scenario==='early';
+ $('phase-eyebrow').textContent='Phase '+String(state.phase+1).padStart(2,'0');$('phase-title').textContent=p.name;$('phase-tag').textContent=p.tag;
+ const facts=p.facts.map(x=>[...x]);
+ if(state.phase===0)facts[1][0]=d(projections().series[0].dscr)+'×';
+ if(state.phase===1){facts[0][0]=activeValues().delay+' Monate';facts[1][0]=(activeValues().occ>0?'+':'')+activeValues().occ+' %';facts[2][0]='+'+activeValues().overrun+' %'}
+ $('facts').innerHTML=facts.map(x=>'<div class="fact"><b>'+x[0]+'</b><span>'+x[1]+'</span></div>').join('');
+ $('pause-controls').hidden=state.phase!==2;
+ $('pause-toggle').textContent=state.paused?'↺ Tilgungsaussetzung zurücknehmen':'⏸ 3 Monate Kapitaltilgung aussetzen';
+ $('pause-toggle').classList.toggle('active',state.paused);
+ $('pause-toggle').setAttribute('aria-pressed',state.paused?'true':'false');
+ $('pause-help').textContent=state.paused?'Aktiviert: 3 Monate nur Zinsen, keine Kapitaltilgung. Danach läuft die ursprüngliche Annuität weiter.':'Noch nicht aktiviert: Es gilt der unveränderte französische Tilgungsplan.';
+ $('phase-story').textContent=p.story;
+ $('response').textContent=(good?'Frühzeitige Erkennung: ':'Folienverlauf: ')+(good?p.early:p.actual);
+ $('response').className='comparison-note'+(good?'':' problem');
+ $('phase-progress').textContent=(state.phase+1)+' von 4';
+ $('prev').disabled=state.phase===0;$('next').disabled=state.phase===3;
+ document.querySelectorAll('[data-phase]').forEach(el=>{let selected=Number(el.dataset.phase)===state.phase;el.classList.toggle('active',selected);el.setAttribute('aria-current',selected?'step':'false')});
+}
+function paintStage(){
+ const n=state.phase,good=state.scenario==='early';let stage,ecl,npl,warning,sub,note;
+ if(n===0){stage='Stage 1';ecl='6 T€';npl='4,0 %';warning='Prüfbedarf';sub='0,2 % von 3 Mio. €';note='Die anfängliche Stage-1-Einstufung beweist noch keine tragfähige Kreditvergabe.'}
+ else if(n===1){stage='Stage 1*';ecl='6 T€*';npl='4,0 %';warning='Bauverzug';sub='Ausgangswerte';note='*Schematische Zwischenphase vor dem Stundungsantrag. Bei erheblicher Risikoerhöhung muss die Stage-Einstufung auch jetzt geprüft werden.'}
+ else if(n===2){stage='Stage 2';ecl='210 T€';npl='4,0 %';warning='20 Tage Verzug';sub='7 % von 3 Mio. €';note='Stage 2 und erhöhte Risikovorsorge bei unveränderter NPL-Quote: das Risiko kann längst gestiegen sein, ohne dass die NPL-Quote reagiert.'}
+ else if(good){stage='UTP prüfen';ecl='Neu bewerten';npl='Fachlich prüfen';warning='UTP-Anzeichen';sub='kein fixer Workout-ECL';note='Frühe unabhängige UTP-/Stage-3-Prüfung und Sanierung. Bei erfüllten Kriterien ist zeitnah zu klassifizieren. Ob der Verlust kleiner wird, hängt von den tatsächlichen Rückflüssen ab.'}
+ else{stage='UTP / Stage 3';ecl='1.500 T€';npl='6,2 %';warning='Raten ausgefallen';sub='50 % von 3 Mio. €';note='Im Folienverlauf wurde die fachlich gebotene Einstufung zu spät vorgenommen. Die NPL-Quote steigt von 4,0 % auf 6,2 %.'}
+ $('stage').textContent=stage;$('stage-sub').textContent=n===3&&good?'erforderlichenfalls Stage 3':n===3?'notleidend':'Folien-/Schulungsannahme';
+ $('ecl').textContent=ecl;$('ecl-sub').textContent=sub;$('npl').textContent=npl;$('npl-sub').textContent=n===3&&good?'keine belastbare Quote angenommen':'Beispielwert der Bank';$('warnings').textContent=warning;$('warnings-sub').textContent=n===2?'Stundung und Forbearance prüfen':n===3?'unabhängig eskalieren':'laufend überwachen';$('stage-note').textContent=note;
+}
+function paint(){
+ document.querySelectorAll('[data-scenario]').forEach(b=>{let active=b.dataset.scenario===state.scenario;b.classList.toggle('active',active);b.setAttribute('aria-pressed',active?'true':'false')});
+ const v=activeValues();
+ ['occ','delay','margin','overrun','rate','years','cash'].forEach(id=>{const input=$(id);input.value=v[id];$('v-'+id).textContent=fmtValue(v[id],id);input.style.setProperty('--fill',((v[id]-Number(input.min))/(Number(input.max)-Number(input.min)))*100+'%')});
+ const p=projections(),r=p.series[p.activeYear],good=state.scenario==='early';
+ $('dscr-label').textContent=state.phase===0?'DSCR im Businessplan':'DSCR '+r.year+' · aktuelle Phase';
+ $('focus-year-cfads').textContent=r.year+' · T€';
+ $('focus-year-service').textContent=r.year+' · T€';
+ $('cash-label').textContent='Liquidität bis '+r.year;
+ $('dscr').textContent=d(r.dscr)+'×';$('cfads').textContent=money(r.cfads);$('service').textContent=money(r.service);$('cash-after').textContent=(p.cashAfter<0?'− ':'')+money(Math.abs(p.cashAfter));
+ $('signal-title').textContent=r.dscr<.999?'Schuldendienst nicht gedeckt':r.dscr<1.2?'Schuldendienst knapp gedeckt':'Rechnerischer Puffer vorhanden';
+ $('signal-text').textContent=state.phase===0?'Ausgangslage: Der Businessplan ist auf DSCR 1,00 kalibriert. Schon kleine negative Abweichungen können den Schuldendienst gefährden.':r.dscr<1?'Die tatsächlichen Einnahmen bleiben hinter dem Businessplan. Die Annuität bleibt zunächst gleich – daher entsteht eine Deckungslücke.':isPaused()?'Während der Kapitalstundung sinkt der fällige Schuldendienst, aber der Cashflow wird dadurch nicht automatisch besser.':'Die Rückzahlung ist aktuell rechnerisch gedeckt. Reicht der Liquiditätspuffer auch bei weiteren Problemen?';
+ $('pause-badge').textContent=p.schedule.paused?'3 Monate Zins-only':'Keine Stundung';
+ $('payment-summary').textContent='Französische Tilgung · '+p.schedule.term+' Jahre'+(p.schedule.extraMonths?' + '+p.schedule.extraMonths+' Mon.':'');
+ $('payment-summary').className='status-pill'+(p.schedule.paused?' warn':'');
+ $('payment-tagline').textContent=p.schedule.paused?'3 Monate nur Zinsen · danach gleiche Monatsrate '+money(p.schedule.annuity):'Konstante Monatsrate: '+money(p.schedule.annuity);
+ $('gap-summary').textContent=p.below+' von '+p.series.length+' Jahren mit Unterdeckung';
+ $('gap-summary').className='status-pill'+(p.below?' bad':'');
+ $('gap-tagline').textContent='Kumulierte Deckungslücken: '+money(p.shortfall);
+ renderPayment(p.schedule.rows);renderCashflow(p.series);paintPhase();paintStage();
+}
+function selectScenario(which){state.scenario=which;state.planValues={...BASE};state.stressValues={...STRESS};state.paused=false;state.phase=0;paint()}
+function setPhase(n){state.phase=Math.max(0,Math.min(3,n));paint()}
+document.querySelectorAll('[data-scenario]').forEach(b=>b.addEventListener('click',()=>selectScenario(b.dataset.scenario)));
+document.querySelectorAll('[data-phase]').forEach(b=>b.addEventListener('click',()=>setPhase(Number(b.dataset.phase))));
+$('prev').addEventListener('click',()=>setPhase(state.phase-1));$('next').addEventListener('click',()=>setPhase(state.phase+1));
+$('pause-toggle').addEventListener('click',()=>{if(state.phase!==2)return;state.paused=!state.paused;paint()});
+['occ','delay','margin','overrun','rate','years','cash'].forEach(id=>$(id).addEventListener('input',e=>{activeValues()[id]=Number(e.target.value);paint()}));
+$('reset').addEventListener('click',()=>{if(state.phase===0)state.planValues={...BASE};else state.stressValues={...STRESS};state.paused=false;paint()});
+paint();
+})();
+</script>
+</body>
+</html>
